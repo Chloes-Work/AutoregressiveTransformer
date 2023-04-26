@@ -219,13 +219,14 @@ class Task(LightningModule):
 
 def cli_main():
     parser = ArgumentParser()
-    # trainer args
-    parser = Trainer.add_argparse_args(parser)
 
     # model args
     parser = Task.add_model_specific_args(parser)
     args = parser.parse_args()
 
+    # trainer args
+    parser = Trainer(**vars(args))
+    
     model = Task(**args.__dict__)
 
     if args.checkpoint_path is not None:
