@@ -1,0 +1,5 @@
+speechbrain
+torch
+numpy
+matplotlib
+pytorch-lightning
