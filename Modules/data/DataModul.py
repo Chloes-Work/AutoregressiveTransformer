@@ -3,7 +3,7 @@ import torch
 from pytorch_lightning import LightningDataModule
 from torch.utils.data import DataLoader
 
-from data.dataset import TrainDataset, ValidDataset, TestDataset, readCSV
+from Modules.data.dataset import TrainDataset, ValidDataset, TestDataset, readCSV
 
 class SPKDataModul(LightningDataModule):
     def __init__(
