@@ -6,3 +6,4 @@ pytorch-lightning
 sklearn
 pandas
 librosa
+torchvision
