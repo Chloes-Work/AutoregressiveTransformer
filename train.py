@@ -182,7 +182,7 @@ class Task(LightningModule):
 
         parser.add_argument("--num_workers", default=40, type=int)
         parser.add_argument("--embedding_dim", default=256, type=int)
-        parser.add_argument("--max-epoches", default=256, type=int)
+        parser.add_argument("--max_epochs", default=256, type=int)
         parser.add_argument("--output_dim", default=256, type=int)
         parser.add_argument("--input_dim", default=256, type=int)
         parser.add_argument("--n_mels", type=int, default=80)
