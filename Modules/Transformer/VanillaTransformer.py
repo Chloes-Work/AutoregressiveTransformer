@@ -1,8 +1,9 @@
 import torch
 import torch.nn as nn
-from Transformer.StatisticsPooling import AttentiveStatisticsPooling
 from speechbrain.lobes.models.ECAPA_TDNN import BatchNorm1d
-from Transformer.Transformer import TransformerEncoder
+
+from Modules.Transformer.StatisticsPooling import AttentiveStatisticsPooling
+from Modules.Transformer.Transformer import TransformerEncoder
 
 class VanillaTransformerEncoder(nn.Module):
     def __init__(self, output_dim=512, embed_dim=512, n_blocks = 6, n_heads=4, ff_dim=2048, dropout=0.1, norm=None, n_mels=80):
