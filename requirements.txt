@@ -3,3 +3,6 @@ torch
 numpy
 matplotlib
 pytorch-lightning
+sklearn
+pandas
+librosa
