@@ -178,8 +178,6 @@ class Task(LightningModule):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
         (args, _) = parser.parse_known_args()
 
-        parser.add_argument("--modul_name", default="transformer")
-
         parser.add_argument("--num_workers", default=40, type=int)
         parser.add_argument("--embedding_dim", default=256, type=int)
         parser.add_argument("--max_epochs", default=256, type=int)
