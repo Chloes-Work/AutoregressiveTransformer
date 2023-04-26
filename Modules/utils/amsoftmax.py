@@ -5,7 +5,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from utils.accuracy import accuracy
+from Modules.utils.accuracy import accuracy
 
 class amsoftmax(nn.Module):
     def __init__(self, embedding_dim, num_classes, margin=0.2, scale=30, **kwargs):
