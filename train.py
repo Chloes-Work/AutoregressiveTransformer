@@ -197,7 +197,7 @@ class Task(LightningModule):
         parser.add_argument("--weight_decay", type=float, default=0.000001)
         parser.add_argument("--top_n_rows", type=int, default=None)
 
-        parser.add_argument("--save_dir", type=str, default=None)
+        parser.add_argument("--save_dir", type=str, default="./results")
         parser.add_argument("--checkpoint_path", type=str, default=None)
         parser.add_argument("--loss_name", type=str, default="amsoftmax")
         parser.add_argument("--scheduler", type=str, default="noam")
