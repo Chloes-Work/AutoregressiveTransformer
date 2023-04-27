@@ -202,10 +202,10 @@ class Task(LightningModule):
         parser.add_argument("--loss_name", type=str, default="amsoftmax")
         parser.add_argument("--scheduler", type=str, default="noam")
 
-        parser.add_argument("--train_csv_path", type=str, default="/train.csv")
-        parser.add_argument("--valid_csv_path", type=str, default="/valid.csv")
-        parser.add_argument("--test_csv_path", type=str, default="/test.csv")
-        parser.add_argument("--trial_path", type=str, default="/vox1_test.txt")
+        parser.add_argument("--train_csv_path", type=str, default="./train.csv")
+        parser.add_argument("--valid_csv_path", type=str, default="./valid.csv")
+        parser.add_argument("--test_csv_path", type=str, default="./test.csv")
+        parser.add_argument("--trial_path", type=str, default="./vox1_test.txt")
         parser.add_argument("--score_save_path", type=str, default=None)
 
         parser.add_argument('--eval', action='store_true')
@@ -216,7 +216,7 @@ class Task(LightningModule):
 def cli_main():
     parser = Task.add_model_specific_args(ArgumentParser())
     args = parser.parse_args()
-    
+
     model = Task(**args.__dict__)
 
     if args.checkpoint_path is not None:
