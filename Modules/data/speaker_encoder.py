@@ -12,7 +12,7 @@ class SpeakerEncoder():
 
             data = [df_train, df_valid, df_test]
             df_merged = pd.concat(data)
-            print('speaker count' + str(self.speaker_count))
+            #print('speaker count' + str(self.speaker_count))
             for index, row in df_merged.iterrows():
                 self.encoder.ensure_label(row["spk_id"])
             self.encoder.save(fileName)
