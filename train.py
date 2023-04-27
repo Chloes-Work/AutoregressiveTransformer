@@ -174,10 +174,7 @@ class Task(LightningModule):
                 pg['lr'] = lr_scale * self.hparams.learning_rate
 
     @staticmethod
-    def add_model_specific_args(parent_parser):
-        parser = ArgumentParser(parents=[parent_parser], add_help=False)
-        (args, _) = parser.parse_known_args()
-
+    def add_model_specific_args(parser: ArgumentParser):
         parser.add_argument("--num_workers", default=40, type=int)
         parser.add_argument("--embedding_dim", default=256, type=int)
         parser.add_argument("--max_epochs", default=256, type=int)
@@ -217,10 +214,7 @@ class Task(LightningModule):
 
 
 def cli_main():
-    parser = ArgumentParser()
-
-    # model args
-    parser = Task.add_model_specific_args(parser)
+    parser = Task.add_model_specific_args(ArgumentParser())
     args = parser.parse_args()
 
     # trainer args
