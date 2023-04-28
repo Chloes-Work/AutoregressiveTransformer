@@ -3,9 +3,9 @@ from torch import nn
 
 
 class GE2ELoss(nn.Module):  
-    def __init__(self, device):
+    def __init__(self, embedding_dim, num_classes, device, **kwargs):
         super(GE2ELoss, self).__init__()
-        self.w = nn.Parameter(torch.tensor(10.0).to(device), requires_grad=True)
+        self.w = torch.nn.Parameter(torch.randn(embedding_dim, num_classes), requires_grad=True)
         self.b = nn.Parameter(torch.tensor(-5.0).to(device), requires_grad=True)
         self.device = device
         
