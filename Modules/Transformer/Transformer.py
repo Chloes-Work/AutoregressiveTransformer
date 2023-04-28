@@ -5,11 +5,14 @@ import matplotlib.pyplot as plt
 import math
 import numpy as np
 
+from Modules.Loss.MSELoss import MSELoss
+
 class Transformer(nn.Module):
     def __init__(self, output_dim=512, embed_dim=512, n_blocks = 6, n_heads=4, ff_dim=2048, dropout=0.1, norm = None, n_mels=80):
         super().__init__()
         self.encoder = TransformerEncoder(output_dim, embed_dim, n_blocks, n_heads, ff_dim, dropout, norm, n_mels)
         self.decoder = TransformerDecoder(output_dim, embed_dim, n_blocks, n_heads, ff_dim, dropout, norm, n_mels)
+        
         #may define outputdim
         #self.linear_out = nn.Linear(embed_dim, output_dim)
 
@@ -17,6 +20,23 @@ class Transformer(nn.Module):
         x = self.encoder(x)
         x = self.decoder(x)
         return x
+
+
+class AutoregressiveTransformer(nn.Module):
+    def __init__(self, output_dim=512, embed_dim=512, n_blocks = 6, n_heads=4, ff_dim=2048, dropout=0.1, norm = None, n_mels=80):
+        super().__init__()
+        self.encoder = TransformerEncoder(output_dim, embed_dim, n_blocks, n_heads, ff_dim, dropout, norm, n_mels)
+        self.decoder = TransformerDecoder(output_dim, embed_dim, n_blocks, n_heads, ff_dim, dropout, norm, n_mels)
+        
+        #may define outputdim
+        #self.linear_out = nn.Linear(embed_dim, output_dim)
+
+    def forward(self, x):
+        x_en = self.encoder(x)
+        x = self.decoder(x_en)
+        
+        return x
+
 
 class TransformerEncoder(nn.Module):
     def __init__(self, output_dim=512, embed_dim=512, n_blocks = 6, n_heads=4, ff_dim=2048, dropout=0.1, norm=None, n_mels=80):
@@ -67,7 +87,7 @@ class TransformerDecoder(nn.Module):
         ])
         self.linear_out = nn.Linear(embed_dim, output_dim)
 
-    def forward(self,x):
+    def forward(self, x):
         x = self.linear_in(x)
         segment = x
         segment = self.positional_encoding(segment)

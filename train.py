@@ -11,10 +11,16 @@ from pytorch_lightning.strategies.ddp import DDPStrategy
 from torch.optim.lr_scheduler import StepLR
 
 from Modules.utils.features import Mel_Spectrogram
-from Modules.utils.amsoftmax import amsoftmax
+
+from Modules.Loss.amsoftmax import amsoftmax
+from Modules.Loss.GE2ELoss import GE2ELoss
+from Modules.Loss.MSELoss import MSELoss
+from Modules.Loss.NCELoss import NCELoss
+
 from Modules.utils import score
 
 from Modules.Transformer.VanillaTransformer import VanillaTransformerEncoder
+from Modules.Transformer.Transformer import Transformer
 
 from Modules.data.speaker_encoder import SpeakerEncoder
 from Modules.data.DataModul import SPKDataModul
@@ -39,11 +45,15 @@ class Task(LightningModule):
         self.speaker_encoder = SpeakerEncoder(
             self.hparams.train_csv_path, self.hparams.valid_csv_path, self.hparams.test_csv_path)
 
-        self.model = VanillaTransformerEncoder(output_dim=self.hparams.output_dim, embed_dim=self.hparams.embedding_dim,
+        self.model = Transformer(output_dim=self.hparams.output_dim, embed_dim=self.hparams.embedding_dim,
                                                n_mels=self.hparams.n_mels, norm=nn.LayerNorm(self.hparams.embedding_dim, eps=1e-12))
 
-        self.loss_fun = amsoftmax(
-            embedding_dim=self.hparams.embedding_dim, num_classes=self.hparams.num_classes)
+        ## AM Soft MAX LOSS
+        #self.loss_fun = amsoftmax(embedding_dim=self.hparams.embedding_dim, num_classes=self.hparams.num_classes)
+
+        self.loss_fun = GE2ELoss(embedding_dim=self.hparams.embedding_dim, num_classes=self.hparams.num_classes)
+
+
 
     def forward(self, x):
         feature = self.mel_trans(x)
@@ -245,7 +255,7 @@ def cli_main():
         accelerator='gpu' if AVAIL_GPUS > 0 else 'cpu',
         devices=AVAIL_GPUS if AVAIL_GPUS > 0 else None,
         num_sanity_val_steps=0,
-        sync_batchnorm=False,  # Should be true when on gpu
+        sync_batchnorm=True if AVAIL_GPUS > 0 else False,  # Should be true when on gpu
         callbacks=[checkpoint_callback, lr_monitor],
         default_root_dir=args.save_dir,
         reload_dataloaders_every_n_epochs=1,
