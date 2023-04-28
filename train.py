@@ -103,8 +103,8 @@ class Task(LightningModule):
         self.trial_label.append(trial_label.item())
 
 
-    def on_test_epoch_end(self, pl_module, outputs):
-        ##fuck this for running since time
+    def on_test_epoch_end(self):
+        ## remove for actual run
         num_gpus = torch.cuda.device_count()
 
         index_mapping = {}
