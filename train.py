@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 import torch.distributed as dist
 
-from pytorch_lightning import LightningModule, Trainer, seed_everything, 
+from pytorch_lightning import LightningModule, Trainer
 from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 from pytorch_lightning.strategies.ddp import DDPStrategy
 from torch.optim.lr_scheduler import StepLR
