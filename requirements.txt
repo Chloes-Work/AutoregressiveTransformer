@@ -3,8 +3,7 @@ torch
 numpy
 matplotlib
 pytorch-lightning
-sklearn
 pandas
 librosa
 torchvision
-sklearn
+scikit-learn
