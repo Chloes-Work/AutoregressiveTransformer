@@ -102,7 +102,9 @@ class Task(LightningModule):
         self.index_mapping[batch_idx] = batch_idx
         self.trial_label.append(trial_label.item())
 
-    def on_test_epoch_end(self, outputs):
+
+    def on_test_epoch_end(self, pl_module, outputs):
+        ##fuck this for running since time
         num_gpus = torch.cuda.device_count()
 
         index_mapping = {}
