@@ -29,7 +29,7 @@ class Task(LightningModule):
         learning_rate: float = 0.2,
         weight_decay: float = 1.5e-6,
         batch_size: int = 32,
-        num_workers: int = 10,
+        num_workers: int = 8,
         max_epochs: int = 1000,
         **kwargs
     ):
@@ -154,9 +154,7 @@ class Task(LightningModule):
             raise Exception(
                 "Scheduler not set; options are stepLR or noam; set using --scheduler")
 
-    def optimizer_step(self, epoch, batch_idx, optimizer, optimizer_idx,
-                       optimizer_closure, on_tpu, using_lbfgs):
-
+    def optimizer_step(self, current_epoch, batch_nb, optimizer, optimizer_i, optimizer_closure):
         # warm up learning_rate if LR_Scheduler is used
         if (self.hparams.scheduler == 'stepLR'):
             self.warmup_LR(self, optimizer)
@@ -175,7 +173,7 @@ class Task(LightningModule):
 
     @staticmethod
     def add_model_specific_args(parser: ArgumentParser):
-        parser.add_argument("--num_workers", default=40, type=int)
+        parser.add_argument("--num_workers", default=8, type=int)
         parser.add_argument("--embedding_dim", default=256, type=int)
         parser.add_argument("--max_epochs", default=256, type=int)
         parser.add_argument("--output_dim", default=256, type=int)
