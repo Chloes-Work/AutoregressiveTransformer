@@ -13,7 +13,7 @@ def cosine_score(eval_vectors):
 def cosine_score_inference(eval_vectors):
     enroll_vector = eval_vectors[0]
     test_vector = eval_vectors[1]
-    score = enroll_vector.dot(test_vector.T)
+    score = np.dot(enroll_vector, test_vector.T)
     denom = np.linalg.norm(enroll_vector) * np.linalg.norm(test_vector)
     score = score/denom
     return score.item()
