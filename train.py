@@ -179,20 +179,19 @@ class Task(LightningModule):
         parser.add_argument("--output_dim", default=256, type=int)
         parser.add_argument("--input_dim", default=256, type=int)
         parser.add_argument("--n_mels", type=int, default=80)
-        parser.add_argument("--num_classes", type=int, default=1211)
+        parser.add_argument("--num_classes", type=int, default=1251)
         parser.add_argument("--num_blocks", type=int, default=6)
 
         parser.add_argument("--input_layer", type=str, default="conv2d")
-        parser.add_argument("--pos_enc_layer_type",
-                            type=str, default="abs_pos")
+        parser.add_argument("--pos_enc_layer_type", type=str, default="abs_pos")
 
         parser.add_argument("--second", type=int, default=3)
-        parser.add_argument('--step_size', type=int, default=1)
-        parser.add_argument('--gamma', type=float, default=0.9)
-        parser.add_argument("--batch_size", type=int, default=80)
+        parser.add_argument('--step_size', type=int, default=4)
+        parser.add_argument('--gamma', type=float, default=0.5)
+        parser.add_argument("--batch_size", type=int, default=128)
         parser.add_argument("--learning_rate", type=float, default=0.001)
         parser.add_argument("--warmup_step", type=float, default=2000)
-        parser.add_argument("--weight_decay", type=float, default=0.000001)
+        parser.add_argument("--weight_decay", type=float, default=0.0000001)
         parser.add_argument("--top_n_rows", type=int, default=None)
 
         parser.add_argument("--save_dir", type=str, default="./results")
