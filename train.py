@@ -158,7 +158,10 @@ class Task(LightningModule):
         # warm up learning_rate if LR_Scheduler is used
         if (self.hparams.scheduler == 'stepLR'):
             self.warmup_LR(self, optimizer)
-
+        print("optimizwe\n")
+        print(optimizer)
+        print("optimizwe\n")
+        print("optimizwe\n")
         # update params
         optimizer.step(optimizer_closure=optimizer_closure)
         optimizer.zero_grad()
