@@ -2,7 +2,6 @@ import numpy as np
 from scipy.interpolate import interp1d
 from sklearn.metrics import roc_curve
 from scipy.optimize import brentq
-import torch
 
 def cosine_score(eval_vectors):
     scores = []
