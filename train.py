@@ -22,7 +22,6 @@ from Modules.data.DataModul import SPKDataModul
 from Modules.Scheduler.Noam import NoamScheduler
 
 
-
 class Task(LightningModule):
     def __init__(
         self,
@@ -64,20 +63,20 @@ class Task(LightningModule):
     def getEmbedding(self, batch, batch_idx):
         waveform, label, spk_id_encoded, path = batch
         feature = self.mel_trans(waveform)
-        
+
         embedding = self.model(feature)
         return embedding, 0
-        
+
     def getLosses(self, batch, batch_idx, train_type="train"):
         waveform, label, spk_id_encoded, path = batch
         embedding, classification = self.getEmbedding(batch, batch_idx)
 
         loss, acc = self.loss_fun(embedding, spk_id_encoded)
         self.log(train_type+'_loss', loss, prog_bar=True,
-                    sync_dist=True, batch_size=self.hparams.batch_size)
+                 sync_dist=True, batch_size=self.hparams.batch_size)
         self.log('acc', acc, prog_bar=True,  sync_dist=True,
-                    batch_size=self.hparams.batch_size)
-        
+                 batch_size=self.hparams.batch_size)
+
         return loss
 
     def validation_step(self, batch, batch_idx):
@@ -103,7 +102,7 @@ class Task(LightningModule):
         self.index_mapping[batch_idx] = batch_idx
         self.trial_label.append(trial_label.item())
 
-    def test_epoch_end(self, outputs):
+    def on_test_epoch_end(self, outputs):
         num_gpus = torch.cuda.device_count()
 
         index_mapping = {}
@@ -158,10 +157,9 @@ class Task(LightningModule):
         # warm up learning_rate if LR_Scheduler is used
         if (self.hparams.scheduler == 'stepLR'):
             self.warmup_LR(self, optimizer)
-    
+
         optimizer.step(closure=optimizer_closure)
         optimizer.zero_grad()
-
 
     @staticmethod
     def warmup_LR(self, optimizer):
@@ -170,7 +168,6 @@ class Task(LightningModule):
                            1) / float(self.hparams.warmup_step))
             for idx, pg in enumerate(optimizer.param_groups):
                 pg['lr'] = lr_scale * self.hparams.learning_rate
-
 
     @staticmethod
     def add_model_specific_args(parser: ArgumentParser):
@@ -184,7 +181,8 @@ class Task(LightningModule):
         parser.add_argument("--num_blocks", type=int, default=6)
 
         parser.add_argument("--input_layer", type=str, default="conv2d")
-        parser.add_argument("--pos_enc_layer_type", type=str, default="abs_pos")
+        parser.add_argument("--pos_enc_layer_type",
+                            type=str, default="abs_pos")
 
         parser.add_argument("--second", type=int, default=3)
         parser.add_argument('--step_size', type=int, default=4)
@@ -200,10 +198,13 @@ class Task(LightningModule):
         parser.add_argument("--loss_name", type=str, default="amsoftmax")
         parser.add_argument("--scheduler", type=str, default="noam")
 
-        parser.add_argument("--train_csv_path", type=str, default="./train.csv")
-        parser.add_argument("--valid_csv_path", type=str, default="./valid.csv")
+        parser.add_argument("--train_csv_path", type=str,
+                            default="./train.csv")
+        parser.add_argument("--valid_csv_path", type=str,
+                            default="./valid.csv")
         parser.add_argument("--test_csv_path", type=str, default="./test.csv")
-        parser.add_argument("--trial_path", type=str, default="./veri_test2.txt")
+        parser.add_argument("--trial_path", type=str,
+                            default="./veri_test2.txt")
         parser.add_argument("--score_save_path", type=str, default=None)
 
         parser.add_argument('--eval', action='store_true')
