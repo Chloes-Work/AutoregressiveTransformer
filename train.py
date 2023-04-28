@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 import torch.distributed as dist
 
-from pytorch_lightning import LightningModule, Trainer, seed_everything
+from pytorch_lightning import LightningModule, Trainer, seed_everything, strategies
 from pytorch_lightning.callbacks import LearningRateMonitor, ModelCheckpoint
 
 from torch.optim.lr_scheduler import StepLR
@@ -238,7 +238,7 @@ def cli_main():
     AVAIL_GPUS = torch.cuda.device_count()
     trainer = Trainer(
         max_epochs=args.max_epochs,
-        strategy='ddp_find_unused_parameters_true'
+        strategy=strategies.DDPStrategy(find_unused_parameters=True)
         accelerator='gpu' if AVAIL_GPUS > 0 else 'cpu',
         devices=AVAIL_GPUS if AVAIL_GPUS > 0 else None,
         num_sanity_val_steps=0,
