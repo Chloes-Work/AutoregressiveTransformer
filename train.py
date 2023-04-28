@@ -160,7 +160,7 @@ class Task(LightningModule):
             self.warmup_LR(self, optimizer)
 
         # update params
-        optimizer.step(closure=optimizer_closure)
+        optimizer.step(optimizer_closure=optimizer_closure)
         optimizer.zero_grad()
 
     @staticmethod
