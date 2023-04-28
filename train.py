@@ -154,17 +154,14 @@ class Task(LightningModule):
             raise Exception(
                 "Scheduler not set; options are stepLR or noam; set using --scheduler")
 
-    def optimizer_step(self, current_epoch, batch_nb, optimizer, optimizer_i, optimizer_closure):
+    def optimizer_step(self, current_epoch, batch_nb, optimizer, optimizer_closure):
         # warm up learning_rate if LR_Scheduler is used
         if (self.hparams.scheduler == 'stepLR'):
             self.warmup_LR(self, optimizer)
-        print("optimizwe\n")
-        print(optimizer)
-        print("optimizwe\n")
-        print("optimizwe\n")
-        # update params
+    
         optimizer.step(optimizer_closure=optimizer_closure)
         optimizer.zero_grad()
+
 
     @staticmethod
     def warmup_LR(self, optimizer):
@@ -173,6 +170,7 @@ class Task(LightningModule):
                            1) / float(self.hparams.warmup_step))
             for idx, pg in enumerate(optimizer.param_groups):
                 pg['lr'] = lr_scale * self.hparams.learning_rate
+
 
     @staticmethod
     def add_model_specific_args(parser: ArgumentParser):
