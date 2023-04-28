@@ -13,7 +13,7 @@ class SPKDataModul(LightningDataModule):
         test_csv_path,
         speaker_encoder,
         second: int = 2.0,
-        num_workers: int = 16,
+        num_workers: int = 8,
         batch_size: int = 32,
         shuffle: bool = True,
         pin_memory: bool = True,
@@ -77,7 +77,7 @@ class SPKDataModul(LightningDataModule):
         #print("number of evaluation: {}".format(len(testpath)))
         test_dataset = TestDataset(self.df_test, self.speaker_encoder, self.trial_path, self.second, self.pairs, self.aug, self.top_n_rows)
         loader = torch.utils.data.DataLoader(test_dataset,
-                                             num_workers=10,
+                                             num_workers=8,
                                              shuffle=False, 
                                              batch_size=1)
         return loader
