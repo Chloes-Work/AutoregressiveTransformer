@@ -159,7 +159,7 @@ class Task(LightningModule):
         if (self.hparams.scheduler == 'stepLR'):
             self.warmup_LR(self, optimizer)
     
-        optimizer.step(optimizer_closure=optimizer_closure)
+        optimizer.step(closure=optimizer_closure)
         optimizer.zero_grad()
 
 
