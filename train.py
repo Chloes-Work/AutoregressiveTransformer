@@ -51,7 +51,7 @@ class Task(LightningModule):
         ## AM Soft MAX LOSS
         #self.loss_fun = amsoftmax(embedding_dim=self.hparams.embedding_dim, num_classes=self.hparams.num_classes)
 
-        self.loss_fun = GE2ELoss(embedding_dim=self.hparams.embedding_dim, num_classes=self.hparams.num_classes)
+        self.loss_fun = GE2ELoss(torch.device)
 
 
 
