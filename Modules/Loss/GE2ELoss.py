@@ -17,7 +17,6 @@ class GE2ELoss(nn.Module):
         loss, _ = calc_loss(sim_matrix)
         return loss
     
-
 def calc_loss(sim_matrix):
     same_idx = list(range(sim_matrix.size(0)))
     pos = sim_matrix[same_idx, :, same_idx]
@@ -100,3 +99,7 @@ def get_centroid(embeddings, speaker_num, utterance_num):
         centroid = centroid + utterance
     centroid = centroid/(len(embeddings[speaker_num])-1)
     return centroid
+
+def get_centroids(embeddings):
+    centroids = embeddings.mean(dim=1)
+    return centroids

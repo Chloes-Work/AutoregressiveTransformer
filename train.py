@@ -51,8 +51,10 @@ class Task(LightningModule):
         ## AM Soft MAX LOSS
         #self.loss_fun = amsoftmax(embedding_dim=self.hparams.embedding_dim, num_classes=self.hparams.num_classes)
 
-        self.loss_fun = GE2ELoss(torch.device("cuda"))
+        # TODO fix RuntimeError: mat1 and mat2 shapes cannot be multiplied (6240x256 and 80x256)
+        #self.loss_fun = GE2ELoss(torch.device("cuda"))
 
+        self.loss_fun = MSELoss()
 
 
     def forward(self, x):
