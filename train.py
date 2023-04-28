@@ -73,10 +73,10 @@ class Task(LightningModule):
         embedding, classification = self.getEmbedding(batch, batch_idx)
 
         loss, acc = self.loss_fun(embedding, spk_id_encoded)
-        #self.log(train_type+'_loss', loss, prog_bar=True,
-        #            sync_dist=True, batch_size=self.hparams.batch_size)
-        #self.log('acc', acc, prog_bar=True,  sync_dist=True,
-        #            batch_size=self.hparams.batch_size)
+        self.log(train_type+'_loss', loss, prog_bar=True,
+                    sync_dist=True, batch_size=self.hparams.batch_size)
+        self.log('acc', acc, prog_bar=True,  sync_dist=True,
+                    batch_size=self.hparams.batch_size)
         
         return loss
 
