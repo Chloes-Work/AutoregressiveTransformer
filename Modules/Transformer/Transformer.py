@@ -16,7 +16,7 @@ class Transformer(nn.Module):
         #may define outputdim
         #self.linear_out = nn.Linear(embed_dim, output_dim)
 
-    def forward(self,x):
+    def forward(self, x):
         memory = x
         x = self.encoder(x)
         x = self.decoder(x, memory)
