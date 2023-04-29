@@ -91,7 +91,7 @@ class TransformerDecoder(nn.Module):
         ])
 
     def forward(self, x, mem):
-        x = self.linear_in(mem, x)
+        x = self.linear_in(x)
         segment = x
         segment = self.positional_encoding(segment)
         for layer in self.decoders:
