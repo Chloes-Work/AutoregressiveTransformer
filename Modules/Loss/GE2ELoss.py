@@ -7,8 +7,8 @@ import torch.nn.functional as F
 class GE2ELoss(nn.Module):  
     def __init__(self, embedding_dim, num_classes, device, **kwargs):
         super(GE2ELoss, self).__init__()
-        self.w = torch.nn.Parameter(torch.randn(embedding_dim, num_classes), requires_grad=True)
-        self.b = torch.nn.Parameter(torch.randn(embedding_dim, num_classes), requires_grad=True)
+        self.w = torch.nn.Parameter(torch.randn(num_classes, embedding_dim), requires_grad=True)
+        self.b = torch.nn.Parameter(torch.randn(num_classes, embedding_dim), requires_grad=True)
         self.device = device
         
     def forward(self, embeddings):
