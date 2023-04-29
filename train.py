@@ -45,14 +45,14 @@ class Task(LightningModule):
         self.speaker_encoder = SpeakerEncoder(
             self.hparams.train_csv_path, self.hparams.valid_csv_path, self.hparams.test_csv_path)
 
-        self.model = VanillaTransformerEncoder(output_dim=self.hparams.output_dim, embed_dim=self.hparams.embedding_dim,
+        self.model = Transformer(output_dim=self.hparams.output_dim, embed_dim=self.hparams.embedding_dim,
                                                n_mels=self.hparams.n_mels, norm=nn.LayerNorm(self.hparams.embedding_dim, eps=1e-12))
 
         ## AM Soft MAX LOSS
         self.loss_fun = amsoftmax(embedding_dim=self.hparams.embedding_dim, num_classes=self.hparams.num_classes)
 
         # TODO fix RuntimeError: mat1 and mat2 shapes cannot be multiplied (6240x256 and 80x256)
-        #self.loss_fun = GE2ELoss(embedding_dim=self.hparams.embedding_dim, num_classes=self.hparams.num_classes, device=torch.device("cuda"))
+        # self.loss_fun = GE2ELoss(embedding_dim=self.hparams.embedding_dim, num_classes=self.hparams.num_classes, device=torch.device("cuda"))
 
         #ODO fix  RuntimeError: mat1 and mat2 shapes cannot be multiplied (6240x256 and 80x256)
         #self.loss_fun = MSELoss()
