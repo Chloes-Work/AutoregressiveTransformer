@@ -1,5 +1,7 @@
+import faulthandler
 import torch
 from torch import nn
+import torch.nn.functional as F
 
 
 class GE2ELoss(nn.Module):  
@@ -44,7 +46,7 @@ def get_cossim(embeddings, centroids):
     # for that utterance
     # this is each speaker's utterances against his own centroid, but each
     # comparison centroid has the current utterance removed
-    cos_same = F.cosine_similarity(embeddings_flat, utterance_centroids_flat)
+    cos_same = faulthandler.cosine_similarity(embeddings_flat, utterance_centroids_flat)
 
     # now we get the cosine distance between each utterance and the other speakers'
     # centroids
