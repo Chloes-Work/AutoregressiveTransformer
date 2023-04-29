@@ -187,9 +187,9 @@ class Task(LightningModule):
     @staticmethod
     def add_model_specific_args(parser: ArgumentParser):
         parser.add_argument("--num_workers", default=8, type=int)
-        parser.add_argument("--embedding_dim", default=256, type=int)
+        parser.add_argument("--embedding_dim", default=252, type=int)
         parser.add_argument("--max_epochs", default=256, type=int)
-        parser.add_argument("--output_dim", default=256, type=int)
+        parser.add_argument("--output_dim", default=252, type=int)
         parser.add_argument("--input_dim", default=256, type=int)
         parser.add_argument("--n_mels", type=int, default=80)
         parser.add_argument("--num_classes", type=int, default=1251)
