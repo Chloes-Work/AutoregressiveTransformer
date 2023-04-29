@@ -45,7 +45,7 @@ class Task(LightningModule):
         self.speaker_encoder = SpeakerEncoder(
             self.hparams.train_csv_path, self.hparams.valid_csv_path, self.hparams.test_csv_path)
 
-        self.model = Transformer(output_dim=self.hparams.output_dim, embed_dim=self.hparams.embedding_dim,
+        self.model = VanillaTransformerEncoder(output_dim=self.hparams.output_dim, embed_dim=self.hparams.embedding_dim,
                                                n_mels=self.hparams.n_mels, norm=nn.LayerNorm(self.hparams.embedding_dim, eps=1e-12))
 
         ## AM Soft MAX LOSS
