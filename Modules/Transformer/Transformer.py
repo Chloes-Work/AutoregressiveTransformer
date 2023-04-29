@@ -75,7 +75,7 @@ class TransformerEncoder(nn.Module):
 class TransformerDecoder(nn.Module):
     def __init__(self, output_dim=512, embed_dim=512, n_blocks = 6, n_heads=4, ff_dim=2048, dropout=0.1, norm=None, n_mels=80):
         super().__init__()
-        self.linear_in = nn.Linear(n_mels, embed_dim)
+        self.linear_in = nn.Linear(embed_dim, n_mels)
         self.linear_out = nn.Linear(embed_dim, output_dim)
 
         self.positional_encoding = PositionalEncoding(embed_dim)
@@ -91,7 +91,7 @@ class TransformerDecoder(nn.Module):
         ])
 
     def forward(self, x, mem):
-        x = self.linear_in(x)
+        x = self.linear_in(mem, x)
         segment = x
         segment = self.positional_encoding(segment)
         for layer in self.decoders:
