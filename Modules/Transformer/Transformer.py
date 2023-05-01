@@ -30,7 +30,7 @@ class AutoregressiveTransformer(nn.Module):
         self.decoder = TransformerDecoder(output_dim, embed_dim, n_blocks, n_heads, ff_dim, dropout, norm, n_mels)
         
         #may define outputdim
-        #self.linear_out = nn.Linear(embed_dim, output_dim)
+        self.linear_out = nn.Linear(embed_dim, output_dim)
 
     def forward(self, x):
         x_en = self.encoder(x)

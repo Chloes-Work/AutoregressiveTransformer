@@ -70,7 +70,7 @@ class Task(LightningModule):
 
     def on_train_batch_end(self, outputs, batch, batch_idx):
         lr = self.optimizers().param_groups[0]['lr']
-        # self.log('learning_rate', lr, on_step=True, on_epoch=False, logger=True)
+        self.log('learning_rate', lr, on_step=True, on_epoch=False, logger=True)
         if batch_idx % 100 == 0:
             print("Batch:", batch_idx, "Learning rate:", lr)
 
